@@ -1,0 +1,23 @@
+{
+  "required": true,
+  "compatibilityLevel": "JAVA_8",
+  "verbose": true,
+  "package": "com.spicy.mixin.mixins",
+  "mixins": [
+    "MixinEntityPlayer",
+    "MixinEntityPlayerSP",
+    "MixinGuiNewChat",
+    "MixinItemRenderer",
+    "MixinGuiIngame",
+    "MixinMinecraft",
+    "MixinNetworkManager",
+    "MixinMovementInputFromOptions",
+    "MixinS27PacketExplosion",
+    "MixinS08PacketPlayerPosLook",
+    "MixinEntityLivingBase",
+    "MixinAxisAlignedBB",
+    "MixinShaderGroup",
+    "MixinEntityRenderer",
+    "MixinRendererLivingEntity"
+  ]
+}

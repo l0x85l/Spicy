@@ -1,0 +1,114 @@
+---- Minecraft Crash Report ----
+// Shall we play a game?
+
+Time: 12/30/21 9:23 PM
+Description: Unexpected error
+
+java.lang.NullPointerException: Unexpected error
+	at com.spicy.font.TTFFontRenderer.getWidth(TTFFontRenderer.java:413)
+	at com.spicy.mod.mods.Scoreboard.renderScoreboard(Scoreboard.java:78)
+	at net.minecraft.client.gui.GuiIngame.handler$renderTooltip$zzd000(GuiIngame.java:1313)
+	at net.minecraft.client.gui.GuiIngame.renderTooltip(GuiIngame.java:405)
+	at net.minecraft.client.gui.GuiIngame.renderGameOverlay(GuiIngame.java:176)
+	at net.minecraft.client.renderer.EntityRenderer.updateCameraAndRender(EntityRenderer.java:1401)
+	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1107)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:382)
+	at net.minecraft.client.main.Main.main(Main.java:113)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at net.minecraft.launchwrapper.Launch.launch(Launch.java:135)
+	at net.minecraft.launchwrapper.Launch.main(Launch.java:28)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at net.minecraftforge.gradle.GradleStartCommon.launch(GradleStartCommon.java:97)
+	at GradleStart.main(GradleStart.java:26)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Stacktrace:
+	at com.spicy.font.TTFFontRenderer.getWidth(TTFFontRenderer.java:413)
+	at com.spicy.mod.mods.Scoreboard.renderScoreboard(Scoreboard.java:78)
+	at net.minecraft.client.gui.GuiIngame.handler$renderTooltip$zzd000(GuiIngame.java:1313)
+	at net.minecraft.client.gui.GuiIngame.renderTooltip(GuiIngame.java:405)
+	at net.minecraft.client.gui.GuiIngame.renderGameOverlay(GuiIngame.java:176)
+
+-- Affected level --
+Details:
+	Level name: MpServer
+	All players: 2 total; [EntityPlayerSP['Viserizm'/1109, l='MpServer', x=8.32, y=29.00, z=65.96], EntityOtherPlayerMP['Arround'/739974, l='MpServer', x=7.94, y=30.10, z=72.78]]
+	Chunk stats: MultiplayerChunkCache: 169, 169
+	Level seed: 0
+	Level generator: ID 00 - default, ver 1. Features enabled: false
+	Level generator options: 
+	Level spawn location: -53.00,28.00,33.00 - World: (-53,28,33), Chunk: (at 11,1,1 in -4,2; contains blocks -64,0,32 to -49,255,47), Region: (-1,0; contains chunks -32,0 to -1,31, blocks -512,0,0 to -1,255,511)
+	Level time: 95807645 game time, 2184000 day time
+	Level dimension: 0
+	Level storage version: 0x00000 - Unknown?
+	Level weather: Rain time: 0 (now: false), thunder time: 0 (now: false)
+	Level game mode: Game mode: survival (ID 0). Hardcore: false. Cheats: false
+	Forced entities: 14 total; [EntityPlayerSP['Viserizm'/1109, l='MpServer', x=8.32, y=29.00, z=65.96], EntityOtherPlayerMP['Klaxxon'/684329, l='MpServer', x=-52.72, y=28.00, z=33.50], EntityOtherPlayerMP['Arround'/739974, l='MpServer', x=7.94, y=30.10, z=72.78], EntityOtherPlayerMP['allahmaystraqwe'/958178, l='MpServer', x=-52.72, y=28.00, z=33.50], EntityOtherPlayerMP['Raelast'/6529, l='MpServer', x=-19.13, y=26.00, z=32.88], EntityOtherPlayerMP['Cluster_'/911311, l='MpServer', x=-54.81, y=28.00, z=36.31], EntityOtherPlayerMP['§dKit'/151, l='MpServer', x=-45.53, y=27.50, z=19.47], EntityOtherPlayerMP['Arround'/739974, l='MpServer', x=7.94, y=30.10, z=72.78], EntityOtherPlayerMP['§9Discord'/148, l='MpServer', x=-36.41, y=27.50, z=10.28], EntityOtherPlayerMP['§bRütbeler'/154, l='MpServer', x=-41.66, y=29.00, z=8.47], EntityOtherPlayerMP['§4Katiller'/157, l='MpServer', x=-45.69, y=28.50, z=10.47], EntityOtherPlayerMP['§aZenginler'/160, l='MpServer', x=-47.53, y=29.00, z=14.31], EntityOtherPlayerMP['GlitchDEV'/950070, l='MpServer', x=-52.72, y=28.00, z=33.50], EntityOtherPlayerMP['Informated_xd'/907115, l='MpServer', x=43.58, y=35.00, z=84.34]]
+	Retry entities: 0 total; []
+	Server brand: TacoSpigot
+	Server type: Non-integrated multiplayer server
+Stacktrace:
+	at net.minecraft.client.multiplayer.WorldClient.addWorldInfoToCrashReport(WorldClient.java:402)
+	at net.minecraft.client.Minecraft.addGraphicsAndWorldToCrashReport(Minecraft.java:2729)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:411)
+	at net.minecraft.client.main.Main.main(Main.java:113)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at net.minecraft.launchwrapper.Launch.launch(Launch.java:135)
+	at net.minecraft.launchwrapper.Launch.main(Launch.java:28)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at net.minecraftforge.gradle.GradleStartCommon.launch(GradleStartCommon.java:97)
+	at GradleStart.main(GradleStart.java:26)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.8.9
+	Operating System: Windows 10 (amd64) version 10.0
+	Java Version: 1.8.0_312, Temurin
+	Java VM Version: OpenJDK 64-Bit Server VM (mixed mode), Temurin
+	Memory: 670441728 bytes (639 MB) / 856686592 bytes (817 MB) up to 1892155392 bytes (1804 MB)
+	JVM Flags: 1 total; -XX:-DisableExplicitGC
+	IntCache: cache: 0, tcache: 0, allocated: 13, tallocated: 95
+	Launched Version: 1.8.9
+	LWJGL: 2.9.4
+	OpenGL: Radeon RX 570 Series GL version 4.6.14761 Compatibility Profile Context 21.10.2 30.0.13025.5005, ATI Technologies Inc.
+	GL Caps: Using GL 1.3 multitexturing.
+Using GL 1.3 texture combiners.
+Using framebuffer objects because OpenGL 3.0 is supported and separate blending is supported.
+Shaders are available because OpenGL 2.1 is supported.
+VBOs are available because OpenGL 1.5 is supported.
+
+	Using VBOs: Yes
+	Is Modded: Very likely; Jar signature invalidated
+	Type: Client (map_client.txt)
+	Resource Packs: 
+	Current Language: English (US)
+	Profiler Position: N/A (disabled)
+	CPU: 12x AMD Ryzen 5 1600X Six-Core Processor 
+	OptiFine Version: OptiFine_1.8.9_HD_U_M5
+	OptiFine Build: ~~NULL~~
+	Render Distance Chunks: 12
+	Mipmaps: 4
+	Anisotropic Filtering: 1
+	Antialiasing: 0
+	Multitexture: false
+	Shaders: (internal)
+	OpenGlVersion: 4.6.14761 Compatibility Profile Context 21.10.2 30.0.13025.5005
+	OpenGlRenderer: Radeon RX 570 Series
+	OpenGlVendor: ATI Technologies Inc.
+	CpuCount: 12

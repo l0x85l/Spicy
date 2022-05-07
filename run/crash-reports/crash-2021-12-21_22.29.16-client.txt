@@ -1,0 +1,128 @@
+---- Minecraft Crash Report ----
+// Hi. I'm Minecraft, and I'm a crashaholic.
+
+Time: 12/21/21 10:29 PM
+Description: Ticking entity
+
+java.lang.NullPointerException: Ticking entity
+	at net.minecraft.client.entity.EntityPlayerSP.handler$onUpdateWalkingPlayerPre$zzb000(EntityPlayerSP.java:999)
+	at net.minecraft.client.entity.EntityPlayerSP.onUpdateWalkingPlayer(EntityPlayerSP.java)
+	at net.minecraft.client.entity.EntityPlayerSP.onUpdate(EntityPlayerSP.java:169)
+	at net.minecraft.world.World.updateEntityWithOptionalForce(World.java:1858)
+	at net.minecraft.world.World.updateEntity(World.java:1827)
+	at net.minecraft.world.World.updateEntities(World.java:1679)
+	at net.minecraft.client.Minecraft.runTick(Minecraft.java:2167)
+	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1081)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:382)
+	at net.minecraft.client.main.Main.main(Main.java:113)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at net.minecraft.launchwrapper.Launch.launch(Launch.java:135)
+	at net.minecraft.launchwrapper.Launch.main(Launch.java:28)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at net.minecraftforge.gradle.GradleStartCommon.launch(GradleStartCommon.java:97)
+	at GradleStart.main(GradleStart.java:26)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Stacktrace:
+	at net.minecraft.client.entity.EntityPlayerSP.handler$onUpdateWalkingPlayerPre$zzb000(EntityPlayerSP.java:999)
+	at net.minecraft.client.entity.EntityPlayerSP.onUpdateWalkingPlayer(EntityPlayerSP.java)
+	at net.minecraft.client.entity.EntityPlayerSP.onUpdate(EntityPlayerSP.java:169)
+	at net.minecraft.world.World.updateEntityWithOptionalForce(World.java:1858)
+	at net.minecraft.world.World.updateEntity(World.java:1827)
+
+-- Entity being ticked --
+Details:
+	Entity Type: null (net.minecraft.client.entity.EntityPlayerSP)
+	Entity ID: 876644
+	Entity Name: Viserizm
+	Entity's Exact location: 0.51, 65.00, 0.01
+	Entity's Block location: 0.00,65.00,0.00 - World: (0,65,0), Chunk: (at 0,4,0 in 0,0; contains blocks 0,0,0 to 15,255,15), Region: (0,0; contains chunks 0,0 to 31,31, blocks 0,0,0 to 511,255,511)
+	Entity's Momentum: 0.00, -0.08, 0.00
+	Entity's Rider: ~~ERROR~~ NullPointerException: null
+	Entity's Vehicle: ~~ERROR~~ NullPointerException: null
+Stacktrace:
+	at net.minecraft.world.World.updateEntities(World.java:1679)
+
+-- Affected level --
+Details:
+	Level name: MpServer
+	All players: 2 total; [EntityPlayerSP['Viserizm'/876644, l='MpServer', x=0.51, y=65.00, z=0.01], EntityOtherPlayerMP['Settings'/5768, l='MpServer', x=12.44, y=64.00, z=-5.50]]
+	Chunk stats: MultiplayerChunkCache: 120, 120
+	Level seed: 0
+	Level generator: ID 01 - flat, ver 0. Features enabled: false
+	Level generator options: 
+	Level spawn location: 8.00,64.00,8.00 - World: (8,64,8), Chunk: (at 8,4,8 in 0,0; contains blocks 0,0,0 to 15,255,15), Region: (0,0; contains chunks 0,0 to 31,31, blocks 0,0,0 to 511,255,511)
+	Level time: 112832861 game time, 113175936 day time
+	Level dimension: 0
+	Level storage version: 0x00000 - Unknown?
+	Level weather: Rain time: 0 (now: false), thunder time: 0 (now: false)
+	Level game mode: Game mode: survival (ID 0). Hardcore: false. Cheats: false
+	Forced entities: 27 total; [EntityPlayerSP['Viserizm'/876644, l='MpServer', x=0.51, y=65.00, z=0.01], EntityItemFrame['entity.ItemFrame.name'/768, l='MpServer', x=9.50, y=66.50, z=26.97], EntityOtherPlayerMP['Target'/3442, l='MpServer', x=35.56, y=64.00, z=55.31], EntityItemFrame['entity.ItemFrame.name'/769, l='MpServer', x=10.50, y=66.50, z=26.97], EntityOtherPlayerMP['Target'/6233, l='MpServer', x=35.50, y=64.00, z=78.53], EntityItemFrame['entity.ItemFrame.name'/770, l='MpServer', x=11.50, y=66.50, z=26.97], EntityItemFrame['entity.ItemFrame.name'/771, l='MpServer', x=12.50, y=66.50, z=26.97], EntityItemFrame['entity.ItemFrame.name'/772, l='MpServer', x=10.50, y=65.50, z=26.97], EntityOtherPlayerMP['Target'/5115, l='MpServer', x=15.44, y=64.00, z=78.47], EntityPlayerSP['Viserizm'/876644, l='MpServer', x=0.51, y=65.00, z=0.01], EntityOtherPlayerMP['Settings'/5768, l='MpServer', x=12.44, y=64.00, z=-5.50], EntityArmorStand['§5Parkour'/1428, l='MpServer', x=20.28, y=66.66, z=26.28], EntityArmorStand['§dTry to beat your high score'/1429, l='MpServer', x=20.28, y=66.41, z=26.28], EntityArmorStand['§4SOON'/1430, l='MpServer', x=-19.47, y=67.66, z=27.44], EntityOtherPlayerMP['Settings'/5768, l='MpServer', x=12.44, y=64.00, z=-5.50], EntityBoat['Boat'/756, l='MpServer', x=-7.34, y=126.00, z=15.63], EntityMinecartEmpty['entity.MinecartRideable.name'/757, l='MpServer', x=1.31, y=126.00, z=-5.88], EntityMinecartEmpty['entity.MinecartRideable.name'/758, l='MpServer', x=5.75, y=126.00, z=-10.19], EntityMinecartEmpty['entity.MinecartRideable.name'/759, l='MpServer', x=5.84, y=126.00, z=-3.78], EntityMinecartEmpty['entity.MinecartRideable.name'/760, l='MpServer', x=10.66, y=126.00, z=11.03], EntityItemFrame['entity.ItemFrame.name'/761, l='MpServer', x=12.50, y=65.50, z=26.97], EntityItemFrame['entity.ItemFrame.name'/762, l='MpServer', x=11.50, y=65.50, z=26.97], EntityItemFrame['entity.ItemFrame.name'/763, l='MpServer', x=9.50, y=65.50, z=26.97], EntityItemFrame['entity.ItemFrame.name'/764, l='MpServer', x=8.50, y=65.50, z=26.97], EntityItemFrame['entity.ItemFrame.name'/765, l='MpServer', x=7.50, y=65.50, z=26.97], EntityItemFrame['entity.ItemFrame.name'/766, l='MpServer', x=7.50, y=66.50, z=26.97], EntityItemFrame['entity.ItemFrame.name'/767, l='MpServer', x=8.50, y=66.50, z=26.97]]
+	Retry entities: 0 total; []
+	Server brand: PaperSpigot
+	Server type: Non-integrated multiplayer server
+Stacktrace:
+	at net.minecraft.client.multiplayer.WorldClient.addWorldInfoToCrashReport(WorldClient.java:402)
+	at net.minecraft.client.Minecraft.addGraphicsAndWorldToCrashReport(Minecraft.java:2729)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:403)
+	at net.minecraft.client.main.Main.main(Main.java:113)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at net.minecraft.launchwrapper.Launch.launch(Launch.java:135)
+	at net.minecraft.launchwrapper.Launch.main(Launch.java:28)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at net.minecraftforge.gradle.GradleStartCommon.launch(GradleStartCommon.java:97)
+	at GradleStart.main(GradleStart.java:26)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.8.9
+	Operating System: Windows 10 (amd64) version 10.0
+	Java Version: 1.8.0_312, Temurin
+	Java VM Version: OpenJDK 64-Bit Server VM (mixed mode), Temurin
+	Memory: 353784968 bytes (337 MB) / 536870912 bytes (512 MB) up to 1892155392 bytes (1804 MB)
+	JVM Flags: 1 total; -XX:-DisableExplicitGC
+	IntCache: cache: 0, tcache: 0, allocated: 0, tallocated: 0
+	Launched Version: 1.8.9
+	LWJGL: 2.9.4
+	OpenGL: Radeon RX 570 Series GL version 4.6.14761 Compatibility Profile Context 21.10.2 30.0.13025.5005, ATI Technologies Inc.
+	GL Caps: Using GL 1.3 multitexturing.
+Using GL 1.3 texture combiners.
+Using framebuffer objects because OpenGL 3.0 is supported and separate blending is supported.
+Shaders are available because OpenGL 2.1 is supported.
+VBOs are available because OpenGL 1.5 is supported.
+
+	Using VBOs: Yes
+	Is Modded: Very likely; Jar signature invalidated
+	Type: Client (map_client.txt)
+	Resource Packs: 
+	Current Language: English (US)
+	Profiler Position: N/A (disabled)
+	CPU: 12x AMD Ryzen 5 1600X Six-Core Processor 
+	OptiFine Version: OptiFine_1.8.9_HD_U_M5
+	OptiFine Build: ~~NULL~~
+	Render Distance Chunks: 12
+	Mipmaps: 4
+	Anisotropic Filtering: 1
+	Antialiasing: 0
+	Multitexture: false
+	Shaders: null
+	OpenGlVersion: 4.6.14761 Compatibility Profile Context 21.10.2 30.0.13025.5005
+	OpenGlRenderer: Radeon RX 570 Series
+	OpenGlVendor: ATI Technologies Inc.
+	CpuCount: 12
