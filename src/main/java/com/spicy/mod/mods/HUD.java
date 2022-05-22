@@ -4,6 +4,7 @@ import com.spicy.Spicy;
 import com.spicy.events.Render2DEvent;
 import com.spicy.mod.Category;
 import com.spicy.mod.Mod;
+import com.spicy.user.User;
 import com.spicy.utils.ColorUtils;
 import com.spicy.utils.RenderUtils;
 import net.minecraft.client.Minecraft;
@@ -32,7 +33,6 @@ public class HUD extends Mod {
     }
 
     public Listener<Render2DEvent> renderListener = new Listener<>(event -> {
-
         GL11.glPushMatrix();
         GL11.glColor3f(1, getMinecraft().thePlayer.hurtTime > 1 ? 0 : 1, getMinecraft().thePlayer.hurtTime > 1 ? 0 : 1);
         GL11.glEnable(GL11.GL_BLEND);

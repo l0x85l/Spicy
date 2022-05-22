@@ -18,6 +18,7 @@ public class CommandManager {
         commands.add(new Command("toggle", "toggle the modules", new Toggle()));
         commands.add(new Command("bind", "set bind the modules", new Bind()));
         commands.add(new Command("visible", "set visible the modules", new Visible()));
+        commands.add(new Command("cosmetic", "change ur look", new Cosmetic()));
     }
 
     public List<String> getArgs(String text) {

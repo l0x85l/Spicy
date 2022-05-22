@@ -4,17 +4,22 @@ import com.spicy.Spicy;
 import com.spicy.events.UpdateEvent;
 import com.spicy.mod.Category;
 import com.spicy.mod.Mod;
+import com.spicy.setting.$;
+import com.spicy.setting.interfaces.Setting;
 import com.spicy.utils.RotationUtils;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import org.lwjgl.input.Keyboard;
 import pisi.unitedmeows.eventapi.event.listener.Listener;
 
 public class AutoDrink extends Mod {
     public boolean drinking = false;
-    public float health = 5.5f;
+    @Setting(label = "health")
+    public $<Double> health = new $<>(5.5, 1.0, 10.0);
 
     public AutoDrink() {
         super("AutoDrink", "Auto drink healing potion", 0, Category.PLAYER);
@@ -22,36 +27,67 @@ public class AutoDrink extends Mod {
 
     private boolean swapped;
 
+    @Setting(label = "Mode")
+    public $<AutoDrink.Mode> mode = new $<>(AutoDrink.Mode.MANUAL);
+
+
+    public enum Mode {
+        MANUAL, AUTO
+    }
+
     /**
      * W.I.P not stable
      */
     public Listener<UpdateEvent> updateListener = new Listener<>(event -> {
         KillAura aura = (KillAura) Spicy.getINSTANCE().modManager.getMod(KillAura.class);
-        if (aura.targets != null && aura.targets.size() > aura.index) {
-            if (getMinecraft().thePlayer.getHealth() / 2 < health) {
-                getPotion();
-                KeyBinding.setKeyBindState(getMinecraft().gameSettings.keyBindUseItem.getKeyCode(), true);
-                drinking = true;
-                if (aura.targets.size() > aura.index) {
-                    final float[] rotations = RotationUtils.getRotations(aura.targets.get(aura.index));
-                    getMinecraft().thePlayer.rotationYaw = -rotations[0];
-                    KeyBinding.setKeyBindState(getMinecraft().gameSettings.keyBindForward.getKeyCode(), true);
-                }
-                aura.updateListener.pause();
-                swapped = true;
-            } else {
-                if (swapped) {
-                    drinking = false;
-                    KeyBinding.setKeyBindState(getMinecraft().gameSettings.keyBindUseItem.getKeyCode(), false);
-                    getSword();
-                    aura.updateListener.resume();
+        switch (mode.val()) {
+            case AUTO: {
+                setSuffix("Auto " + health.val());
+                if (getMinecraft().thePlayer.getHealth() / 2 < health.val()) {
+                    getPotion();
+                    KeyBinding.setKeyBindState(getMinecraft().gameSettings.keyBindUseItem.getKeyCode(), true);
+                    drinking = true;
                     if (aura.targets.size() > aura.index) {
                         final float[] rotations = RotationUtils.getRotations(aura.targets.get(aura.index));
-                        getMinecraft().thePlayer.rotationYaw = rotations[0];
-                        KeyBinding.setKeyBindState(getMinecraft().gameSettings.keyBindForward.getKeyCode(), false);
+                        getMinecraft().thePlayer.rotationYaw = -rotations[0];
+                        KeyBinding.setKeyBindState(getMinecraft().gameSettings.keyBindForward.getKeyCode(), true);
                     }
-                    swapped = false;
+                    aura.updateListener.pause();
+                    swapped = true;
+                } else {
+                    if (swapped) {
+                        drinking = false;
+                        KeyBinding.setKeyBindState(getMinecraft().gameSettings.keyBindUseItem.getKeyCode(), false);
+                        getSword();
+                        aura.updateListener.resume();
+                        if (aura.targets.size() > aura.index) {
+                            final float[] rotations = RotationUtils.getRotations(aura.targets.get(aura.index));
+                            getMinecraft().thePlayer.rotationYaw = rotations[0];
+                            KeyBinding.setKeyBindState(getMinecraft().gameSettings.keyBindForward.getKeyCode(), false);
+                        }
+                        swapped = false;
+                    }
                 }
+                break;
+            }
+            case MANUAL: {
+                setSuffix("Manual " + health.val());
+                if (getMinecraft().thePlayer.getHealth() / 2 < health.val()) {
+                    getPotion();
+                    KeyBinding.setKeyBindState(getMinecraft().gameSettings.keyBindUseItem.getKeyCode(), true);
+                    drinking = true;
+                    aura.updateListener.pause();
+                    swapped = true;
+                } else {
+                    if (swapped) {
+                        drinking = false;
+                        KeyBinding.setKeyBindState(getMinecraft().gameSettings.keyBindUseItem.getKeyCode(), false);
+                        getSword();
+                        aura.updateListener.resume();
+                        swapped = false;
+                    }
+                }
+                break;
             }
         }
 
@@ -82,8 +118,11 @@ public class AutoDrink extends Mod {
             ItemStack stack = getMinecraft().thePlayer.inventory.mainInventory[slot];
             if (stack != null && stack.getItem() instanceof ItemPotion) {
                 ItemPotion is = (ItemPotion) stack.getItem();
-                if (is.getItemStackDisplayName(stack).contains("healing"))
-                    newItem = slot;
+                for (PotionEffect effect : is.getEffects(stack)) {
+                    if (effect.getPotionID() == Potion.heal.id) {
+                        newItem = slot;
+                    }
+                }
             }
         }
         if (newItem > -1) {

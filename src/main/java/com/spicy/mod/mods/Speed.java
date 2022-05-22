@@ -11,6 +11,7 @@ import com.spicy.utils.interfaces.IAxisAlignedBB;
 import com.spicy.utils.interfaces.IMinecraft;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
+import net.minecraft.potion.Potion;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
@@ -26,6 +27,19 @@ public class Speed extends Mod {
     private boolean turnCancel;
     private boolean prevStrafing;
 
+
+    /*Fantasy fields*/
+    public static float modifierFantasy;
+    private int ticksFantasy;
+    private int tickaddFantasy;
+    private double ticks2Fantasy;
+    private int turnTicksFantasy;
+    private float prevYawFantasy;
+    private boolean turnCancelFantasy;
+    private boolean prevStrafingFantasy;
+    private double moveSpeedFantasy;
+    boolean moveFantasy;
+
     @Setting(label = "Mode")
     public $<Mode> mode = new $<>(Mode.OLDNCP);
 
@@ -35,6 +49,15 @@ public class Speed extends Mod {
 
     public enum Mode {
         OLDNCP, FANTASY
+    }
+
+    public double getBaseMoveSpeed() {
+        double baseSpeed = 0.2873;
+        if (getMinecraft().thePlayer.isPotionActive(Potion.moveSpeed)) {
+            final int amplifier = getMinecraft().thePlayer.getActivePotionEffect(Potion.moveSpeed).getAmplifier();
+            baseSpeed *= 1.0 + 0.2 * (amplifier + 1);
+        }
+        return baseSpeed;
     }
 
     public Listener<UpdateEvent> updateListener = new Listener<UpdateEvent>(event -> {
@@ -77,6 +100,270 @@ public class Speed extends Mod {
                     this.prevStrafing = this.isStrafing();
                     break;
                 }
+                case FANTASY: {
+                    setSuffix("Fantasy");
+                    if (!getMinecraft().thePlayer.onGround) {
+                        this.ticksFantasy = -5;
+                        this.tickaddFantasy = -5;
+                        this.ticks2Fantasy = getBaseMoveSpeed();
+                        this.moveSpeedFantasy = getBaseMoveSpeed();
+                        this.ticks2Fantasy = 0.0;
+                        ++this.ticks2Fantasy;
+                    }
+                    ((IMinecraft) getMinecraft()).getTimer().timerSpeed = 1.3f;
+                    if (this.checks()) {
+                        double speed = 2.52;
+                        double speedTick = 2.485;
+                        double speedEmulsifier = 5.0;
+                        double speedFix112 = 2.333;
+                        double holyshit = 0.4;
+                        speed = 2.485;
+                        speedTick = 0.001664;
+                        speedEmulsifier = 1.0E-4;
+                        speedFix112 = 0.00123662;
+                        holyshit = 0.003;
+                        if (this.isStrafing() != this.prevStrafingFantasy) {
+                            this.turnTicksFantasy = 1;
+                            this.turnCancelFantasy = true;
+                            ++this.ticks2Fantasy;
+                            this.moveSpeedFantasy = getBaseMoveSpeed();
+                            final MovementInput movementInput = getMinecraft().thePlayer.movementInput;
+                            float forward = getMinecraft().thePlayer.moveForward;
+                            float strafe = getMinecraft().thePlayer.moveStrafing;
+                            float yaw = getMinecraft().thePlayer.rotationYaw;
+                            if (forward != 0.0f) {
+                                if (strafe >= 1.0f) {
+                                    yaw += (float) ((forward > 0.0f) ? -45 : 45);
+                                    strafe = 0.0f;
+                                } else if (strafe <= -1.0f) {
+                                    yaw += (float) ((forward > 0.0f) ? 45 : -45);
+                                    strafe = 0.0f;
+                                }
+                                if (forward > 0.0f) {
+                                    forward = 1.0f;
+                                } else if (forward < 0.0f) {
+                                    forward = -1.0f;
+                                }
+                            }
+                        }
+                        if (this.ticks2Fantasy == 1.0) {
+                            speed = 0.003;
+                            if (!this.isColliding(((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speed, 0.0, getMinecraft().thePlayer.motionZ * speed))) {
+                                ((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speed, 0.0, getMinecraft().thePlayer.motionZ * speed);
+                            }
+                            this.ticks2Fantasy = 0.0;
+                        }
+                        if (this.ticks == 1) {
+                            ((IMinecraft) getMinecraft()).getTimer().timerSpeed = 1.3f;
+                            if (this.turnTicks <= 0) {
+                                this.turnCancel = false;
+                            }
+                            if (!this.isColliding(((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speed, 0.0, getMinecraft().thePlayer.motionZ * speed))) {
+                                ((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speed, 0.0, getMinecraft().thePlayer.motionZ * speed);
+                            }
+                            if (!this.isColliding(((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speedTick, 0.0, getMinecraft().thePlayer.motionZ * speedTick))) {
+                                ((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speedTick, 0.0, getMinecraft().thePlayer.motionZ * speedTick);
+                            }
+                            if (!this.isColliding(((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speedEmulsifier, 0.0, getMinecraft().thePlayer.motionZ * speedEmulsifier))) {
+                                ((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speedEmulsifier, 0.0, getMinecraft().thePlayer.motionZ * speedEmulsifier);
+                            }
+                            if (!this.isColliding(((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speedFix112, 0.0, getMinecraft().thePlayer.motionZ * speedFix112))) {
+                                ((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speedFix112, 0.0, getMinecraft().thePlayer.motionZ * speedFix112);
+                            }
+                            if (!this.isColliding(((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speedTick, 0.0, getMinecraft().thePlayer.motionZ * speedTick))) {
+                                ((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speedTick, 0.0, getMinecraft().thePlayer.motionZ * speedTick);
+                            }
+                            if (!this.isColliding(((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * holyshit, 0.0, getMinecraft().thePlayer.motionZ * holyshit))) {
+                                ((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * holyshit, 0.0, getMinecraft().thePlayer.motionZ * holyshit);
+                            }
+                            ++this.ticks2Fantasy;
+                            this.ticks2Fantasy = 1.0;
+                        }
+                        if (this.tickaddFantasy == 1) {
+                            speed = 0.1;
+                            ((IMinecraft) getMinecraft()).getTimer().timerSpeed = 1.3f;
+                            if (this.turnTicksFantasy <= 0) {
+                                this.turnCancelFantasy = false;
+                            }
+                            if (!this.isColliding(((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speed, 0.0, getMinecraft().thePlayer.motionZ * speed))) {
+                                ((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speed, 0.0, getMinecraft().thePlayer.motionZ * speed);
+                            }
+                            if (!this.isColliding(((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speedTick, 0.0, getMinecraft().thePlayer.motionZ * speedTick))) {
+                                ((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speedTick, 0.0, getMinecraft().thePlayer.motionZ * speedTick);
+                            }
+                            if (!this.isColliding(((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speedEmulsifier, 0.0, getMinecraft().thePlayer.motionZ * speedEmulsifier))) {
+                                ((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speedEmulsifier, 0.0, getMinecraft().thePlayer.motionZ * speedEmulsifier);
+                            }
+                            if (!this.isColliding(((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speedFix112, 0.0, getMinecraft().thePlayer.motionZ * speedFix112))) {
+                                ((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speedFix112, 0.0, getMinecraft().thePlayer.motionZ * speedFix112);
+                            }
+                            if (!this.isColliding(((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speedTick, 0.0, getMinecraft().thePlayer.motionZ * speedTick))) {
+                                ((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speedTick, 0.0, getMinecraft().thePlayer.motionZ * speedTick);
+                            }
+                            if (!this.isColliding(((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * holyshit, 0.0, getMinecraft().thePlayer.motionZ * holyshit))) {
+                                ((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * holyshit, 0.0, getMinecraft().thePlayer.motionZ * holyshit);
+                            }
+                        } else if (this.ticksFantasy == 2) {
+                            speed = 0.61;
+                            speedTick = 0.001;
+                            speedEmulsifier = 0.01;
+                            speedFix112 = 0.01;
+                            holyshit = -0.0;
+                            final double lmx = getMinecraft().thePlayer.motionX;
+                            final double lmz = getMinecraft().thePlayer.motionZ;
+                            final MovementInput movementInput2 = getMinecraft().thePlayer.movementInput;
+                            float forward2 = getMinecraft().thePlayer.moveForward;
+                            float strafe2 = getMinecraft().thePlayer.moveStrafing;
+                            float yaw2 = getMinecraft().thePlayer.rotationYaw;
+                            if (forward2 != 0.0f) {
+                                if (strafe2 >= 1.0f) {
+                                    yaw2 += (float) ((forward2 > 0.0f) ? -45 : 45);
+                                    strafe2 = 0.0f;
+                                } else if (strafe2 <= -1.0f) {
+                                    yaw2 += (float) ((forward2 > 0.0f) ? 45 : -45);
+                                    strafe2 = 0.0f;
+                                }
+                                if (forward2 > 0.0f) {
+                                    forward2 = 1.0f;
+                                } else if (forward2 < 0.0f) {
+                                    forward2 = -1.0f;
+                                }
+                            }
+                            if (!this.turnCancel && !this.isTurning() && !this.isColliding(((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speed, 0.0, getMinecraft().thePlayer.motionZ * speed))) {
+                                ((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speed, 0.0, getMinecraft().thePlayer.motionZ * speed);
+                            }
+                            if (!this.isColliding(((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speedTick, 0.0, getMinecraft().thePlayer.motionZ * speedTick))) {
+                                ((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speedTick, 0.0, getMinecraft().thePlayer.motionZ * speedTick);
+                            }
+                            if (!this.isColliding(((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speedEmulsifier, 0.0, getMinecraft().thePlayer.motionZ * speedEmulsifier))) {
+                                ((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speedEmulsifier, 0.0, getMinecraft().thePlayer.motionZ * speedEmulsifier);
+                            }
+                            if (!this.isColliding(((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speedFix112, 0.0, getMinecraft().thePlayer.motionZ * speedFix112))) {
+                                ((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speedFix112, 0.0, getMinecraft().thePlayer.motionZ * speedFix112);
+                            }
+                        } else if (this.ticksFantasy == 3) {
+                            speed = 0.59;
+                            speedTick = 0.001;
+                            speedEmulsifier = 0.01;
+                            speedFix112 = 0.0010055235320003313;
+                            final double lmx = getMinecraft().thePlayer.motionX;
+                            final double lmz = getMinecraft().thePlayer.motionZ;
+                            final MovementInput movementInput2 = getMinecraft().thePlayer.movementInput;
+                            float forward2 = getMinecraft().thePlayer.moveForward;
+                            float strafe2 = getMinecraft().thePlayer.moveStrafing;
+                            float yaw2 = getMinecraft().thePlayer.rotationYaw;
+                            if (forward2 != 0.0f) {
+                                if (strafe2 >= 1.0f) {
+                                    yaw2 += (float) ((forward2 > 0.0f) ? -45 : 45);
+                                    strafe2 = 0.0f;
+                                } else if (strafe2 <= -1.0f) {
+                                    yaw2 += (float) ((forward2 > 0.0f) ? 45 : -45);
+                                    strafe2 = 0.0f;
+                                }
+                                if (forward2 > 0.0f) {
+                                    forward2 = 1.0f;
+                                } else if (forward2 < 0.0f) {
+                                    forward2 = -1.0f;
+                                }
+                            }
+                            if (!this.turnCancel && !this.isTurning() && !this.isColliding(((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speed, 0.0, getMinecraft().thePlayer.motionZ * speed))) {
+                                ((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speed, 0.0, getMinecraft().thePlayer.motionZ * speed);
+                            }
+                            if (!this.isColliding(((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speedTick, 0.0, getMinecraft().thePlayer.motionZ * speedTick))) {
+                                ((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speedTick, 0.0, getMinecraft().thePlayer.motionZ * speedTick);
+                            }
+                            if (!this.isColliding(((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speedEmulsifier, 0.0, getMinecraft().thePlayer.motionZ * speedEmulsifier))) {
+                                ((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speedEmulsifier, 0.0, getMinecraft().thePlayer.motionZ * speedEmulsifier);
+                            }
+                            if (!this.isColliding(((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speedFix112, 0.0, getMinecraft().thePlayer.motionZ * speedFix112))) {
+                                ((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speedFix112, 0.0, getMinecraft().thePlayer.motionZ * speedFix112);
+                            }
+                        } else if (this.tickaddFantasy >= 3) {
+                            speed = 0.69;
+                            speedTick = 0.001;
+                            speedEmulsifier = 0.01;
+                            speedFix112 = 0.0010055235320003313;
+                            final double lmx = getMinecraft().thePlayer.motionX;
+                            final double lmz = getMinecraft().thePlayer.motionZ;
+                            final MovementInput movementInput2 = getMinecraft().thePlayer.movementInput;
+                            float forward2 = getMinecraft().thePlayer.moveForward;
+                            float strafe2 = getMinecraft().thePlayer.moveStrafing;
+                            float yaw2 = getMinecraft().thePlayer.rotationYaw;
+                            if (forward2 != 0.0f) {
+                                if (strafe2 >= 1.0f) {
+                                    yaw2 += (float) ((forward2 > 0.0f) ? -45 : 45);
+                                    strafe2 = 0.0f;
+                                } else if (strafe2 <= -1.0f) {
+                                    yaw2 += (float) ((forward2 > 0.0f) ? 45 : -45);
+                                    strafe2 = 0.0f;
+                                }
+                                if (forward2 > 0.0f) {
+                                    forward2 = 1.0f;
+                                } else if (forward2 < 0.0f) {
+                                    forward2 = -1.0f;
+                                }
+                            }
+                            if (!this.turnCancel && !this.isTurning() && !this.isColliding(((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speed, 0.0, getMinecraft().thePlayer.motionZ * speed))) {
+                                ((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speed, 0.0, getMinecraft().thePlayer.motionZ * speed);
+                            }
+                            if (!this.isColliding(((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speedTick, 0.0, getMinecraft().thePlayer.motionZ * speedTick))) {
+                                ((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speedTick, 0.0, getMinecraft().thePlayer.motionZ * speedTick);
+                            }
+                            if (!this.isColliding(((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speedEmulsifier, 0.0, getMinecraft().thePlayer.motionZ * speedEmulsifier))) {
+                                ((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speedEmulsifier, 0.0, getMinecraft().thePlayer.motionZ * speedEmulsifier);
+                            }
+                            if (!this.isColliding(((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speedFix112, 0.0, getMinecraft().thePlayer.motionZ * speedFix112))) {
+                                ((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speedFix112, 0.0, getMinecraft().thePlayer.motionZ * speedFix112);
+                            }
+                        } else if (this.ticksFantasy >= 4) {
+                            if (this.ticksFantasy == 4) {
+                                speed = 0.54;
+                                speedTick = 0.0021;
+                                speedEmulsifier = 0.02;
+                                final double lmx = getMinecraft().thePlayer.motionX;
+                                final double lmz = getMinecraft().thePlayer.motionZ;
+                                final MovementInput movementInput2 = getMinecraft().thePlayer.movementInput;
+                                float forward2 = getMinecraft().thePlayer.moveForward;
+                                float strafe2 = getMinecraft().thePlayer.moveStrafing;
+                                float yaw2 = getMinecraft().thePlayer.rotationYaw;
+                                if (forward2 != 0.0f) {
+                                    if (strafe2 >= 1.0f) {
+                                        yaw2 += (float) ((forward2 > 0.0f) ? -45 : 45);
+                                        strafe2 = 1.1f;
+                                    } else if (strafe2 <= -1.0f) {
+                                        yaw2 += (float) ((forward2 > 0.0f) ? 45 : -45);
+                                        strafe2 = 0.6f;
+                                    }
+                                    if (forward2 > 0.0f) {
+                                        forward2 = 14.0f;
+                                    } else if (forward2 < 0.0f) {
+                                        forward2 = 15.0f;
+                                    }
+                                }
+                                if (!this.turnCancel && !this.isTurning() && !this.isColliding(((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speed, 0.0, getMinecraft().thePlayer.motionZ * speed))) {
+                                    ((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speed, 0.0, getMinecraft().thePlayer.motionZ * speed);
+                                }
+                                if (!this.isColliding(((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speedEmulsifier, 0.0, getMinecraft().thePlayer.motionZ * speedEmulsifier))) {
+                                    ((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speedEmulsifier, 0.0, getMinecraft().thePlayer.motionZ * speedEmulsifier);
+                                }
+                                if (!this.isColliding(((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speedEmulsifier, 0.0, getMinecraft().thePlayer.motionZ * speedEmulsifier))) {
+                                    ((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speedEmulsifier, 0.0, getMinecraft().thePlayer.motionZ * speedEmulsifier);
+                                }
+                                if (!this.isColliding(((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speedFix112, 0.0, getMinecraft().thePlayer.motionZ * speedFix112))) {
+                                    ((IAxisAlignedBB) getMinecraft().thePlayer.getEntityBoundingBox()).offsetAndUpdate(getMinecraft().thePlayer.motionX * speedFix112, 0.0, getMinecraft().thePlayer.motionZ * speedFix112);
+                                }
+                            }
+                            this.ticksFantasy = 0;
+                            this.tickaddFantasy = 0;
+                        }
+                        this.tickaddFantasy = 0;
+                    }
+                    this.prevYawFantasy = getMinecraft().thePlayer.rotationYaw;
+                    ++this.ticksFantasy;
+                    --this.turnTicksFantasy;
+                    this.prevStrafingFantasy = this.isStrafing();
+                }
+                break;
             }
         }
     }).weight(Event.Weight.SLAVE);

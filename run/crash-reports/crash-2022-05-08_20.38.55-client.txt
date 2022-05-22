@@ -1,0 +1,128 @@
+---- Minecraft Crash Report ----
+// Hey, that tickles! Hehehe!
+
+Time: 08.05.2022 20:38
+Description: Updating screen events
+
+java.lang.IndexOutOfBoundsException: Index: 1, Size: 1
+	at java.util.ArrayList.rangeCheck(ArrayList.java:659)
+	at java.util.ArrayList.get(ArrayList.java:435)
+	at com.spicy.cmd.impl.Bind.execute(Bind.java:22)
+	at net.minecraft.client.entity.EntityPlayerSP.sendChatMessage(EntityPlayerSP.java:1114)
+	at net.minecraft.client.gui.GuiScreen.sendChatMessage(GuiScreen.java:482)
+	at net.minecraft.client.gui.GuiScreen.sendChatMessage(GuiScreen.java:472)
+	at net.optifine.gui.GuiChatOF.sendChatMessage(GuiChatOF.java:41)
+	at net.minecraft.client.gui.GuiChat.keyTyped(GuiChat.java:128)
+	at net.minecraft.client.gui.GuiScreen.handleKeyboardInput(GuiScreen.java:634)
+	at net.minecraft.client.gui.GuiScreen.handleInput(GuiScreen.java:585)
+	at net.minecraft.client.Minecraft.runTick(Minecraft.java:1756)
+	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1081)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:382)
+	at net.minecraft.client.main.Main.main(Main.java:113)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at net.minecraft.launchwrapper.Launch.launch(Launch.java:135)
+	at net.minecraft.launchwrapper.Launch.main(Launch.java:28)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at net.minecraftforge.gradle.GradleStartCommon.launch(GradleStartCommon.java:97)
+	at GradleStart.main(GradleStart.java:26)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Stacktrace:
+	at java.util.ArrayList.rangeCheck(ArrayList.java:659)
+	at java.util.ArrayList.get(ArrayList.java:435)
+	at com.spicy.cmd.impl.Bind.execute(Bind.java:22)
+	at net.minecraft.client.entity.EntityPlayerSP.sendChatMessage(EntityPlayerSP.java:1114)
+	at net.minecraft.client.gui.GuiScreen.sendChatMessage(GuiScreen.java:482)
+	at net.minecraft.client.gui.GuiScreen.sendChatMessage(GuiScreen.java:472)
+	at net.optifine.gui.GuiChatOF.sendChatMessage(GuiChatOF.java:41)
+	at net.minecraft.client.gui.GuiChat.keyTyped(GuiChat.java:128)
+	at net.minecraft.client.gui.GuiScreen.handleKeyboardInput(GuiScreen.java:634)
+	at net.minecraft.client.gui.GuiScreen.handleInput(GuiScreen.java:585)
+
+-- Affected screen --
+Details:
+	Screen name: net.optifine.gui.GuiChatOF
+
+-- Affected level --
+Details:
+	Level name: MpServer
+	All players: 4 total; [EntityPlayerSP['Viserizm'/1400062, l='MpServer', x=-12,43, y=64,00, z=-23,44], EntityOtherPlayerMP['AN1L'/1360373, l='MpServer', x=5,81, y=64,00, z=-6,81], EntityOtherPlayerMP['Settings'/4699, l='MpServer', x=10,53, y=64,00, z=-9,50], EntityOtherPlayerMP['roventy1337'/1360447, l='MpServer', x=-17,45, y=64,94, z=-27,70]]
+	Chunk stats: MultiplayerChunkCache: 441, 441
+	Level seed: 0
+	Level generator: ID 01 - flat, ver 0. Features enabled: false
+	Level generator options: 
+	Level spawn location: 0,00,65,00,0,00 - World: (0,65,0), Chunk: (at 0,4,0 in 0,0; contains blocks 0,0,0 to 15,255,15), Region: (0,0; contains chunks 0,0 to 31,31, blocks 0,0,0 to 511,255,511)
+	Level time: 335166697 game time, 335821411 day time
+	Level dimension: 0
+	Level storage version: 0x00000 - Unknown?
+	Level weather: Rain time: 0 (now: false), thunder time: 0 (now: false)
+	Level game mode: Game mode: survival (ID 0). Hardcore: false. Cheats: false
+	Forced entities: 21 total; [EntityOtherPlayerMP['Target'/3687, l='MpServer', x=35,50, y=63,00, z=55,50], EntityOtherPlayerMP['IZonguldaklim'/1349464, l='MpServer', x=16,28, y=85,00, z=28,28], EntityOtherPlayerMP['IZonguldaklim'/1349464, l='MpServer', x=19,25, y=64,00, z=19,78], EntityArmorStand['§5Parkour'/1799, l='MpServer', x=20,28, y=66,66, z=26,28], EntityArmorStand['§dTry to beat your high score'/1800, l='MpServer', x=20,28, y=66,41, z=26,28], EntityArmorStand['§4SOON'/1801, l='MpServer', x=-19,47, y=67,66, z=27,44], EntityOtherPlayerMP['Settings'/4699, l='MpServer', x=10,53, y=64,00, z=-9,50], EntityOtherPlayerMP['AN1L'/1360373, l='MpServer', x=5,81, y=64,00, z=-6,81], EntityOtherPlayerMP['roventy1337'/1360447, l='MpServer', x=-43,23, y=64,66, z=55,66], EntityOtherPlayerMP['Settings'/4699, l='MpServer', x=10,53, y=64,00, z=-9,50], EntityOtherPlayerMP['IZonguldaklim'/1349464, l='MpServer', x=1,24, y=64,00, z=49,93], EntityOtherPlayerMP['AN1L'/1360373, l='MpServer', x=5,81, y=64,00, z=-6,81], EntityOtherPlayerMP['roventy1337'/1360447, l='MpServer', x=1,80, y=65,05, z=61,87], EntityOtherPlayerMP['roventy1337'/1360447, l='MpServer', x=-17,45, y=64,94, z=-27,70], EntityOtherPlayerMP['roventy1337'/1360447, l='MpServer', x=40,31, y=64,67, z=-16,83], EntityOtherPlayerMP['Target'/4869, l='MpServer', x=14,28, y=64,00, z=55,38], EntityArmorStand['§f* §5Blink §f*'/1787, l='MpServer', x=-4,00, y=65,47, z=-36,50], EntityOtherPlayerMP['roventy1337'/1360447, l='MpServer', x=-17,45, y=64,94, z=-27,70], EntityArmorStand['* §5Step§r *'/1788, l='MpServer', x=5,00, y=65,47, z=-36,50], EntityArmorStand['§d(No fullblocks)'/1789, l='MpServer', x=5,00, y=65,22, z=-36,50], EntityPlayerSP['Viserizm'/1400062, l='MpServer', x=-12,43, y=64,00, z=-23,44]]
+	Retry entities: 0 total; []
+	Server brand: PaperSpigot
+	Server type: Non-integrated multiplayer server
+Stacktrace:
+	at net.minecraft.client.multiplayer.WorldClient.addWorldInfoToCrashReport(WorldClient.java:402)
+	at net.minecraft.client.Minecraft.addGraphicsAndWorldToCrashReport(Minecraft.java:2729)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:403)
+	at net.minecraft.client.main.Main.main(Main.java:113)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at net.minecraft.launchwrapper.Launch.launch(Launch.java:135)
+	at net.minecraft.launchwrapper.Launch.main(Launch.java:28)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at net.minecraftforge.gradle.GradleStartCommon.launch(GradleStartCommon.java:97)
+	at GradleStart.main(GradleStart.java:26)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.8.9
+	Operating System: Windows 10 (amd64) version 10.0
+	Java Version: 1.8.0_322, Amazon.com Inc.
+	Java VM Version: OpenJDK 64-Bit Server VM (mixed mode), Amazon.com Inc.
+	Memory: 477908160 bytes (455 MB) / 781189120 bytes (745 MB) up to 1892155392 bytes (1804 MB)
+	JVM Flags: 1 total; -XX:-DisableExplicitGC
+	IntCache: cache: 0, tcache: 0, allocated: 0, tallocated: 0
+	Launched Version: 1.8.9
+	LWJGL: 2.9.4
+	OpenGL: Radeon RX 570 Series GL version 4.6.14761 Compatibility Profile Context 21.10.2 30.0.13025.5005, ATI Technologies Inc.
+	GL Caps: Using GL 1.3 multitexturing.
+Using GL 1.3 texture combiners.
+Using framebuffer objects because OpenGL 3.0 is supported and separate blending is supported.
+Shaders are available because OpenGL 2.1 is supported.
+VBOs are available because OpenGL 1.5 is supported.
+
+	Using VBOs: Yes
+	Is Modded: Very likely; Jar signature invalidated
+	Type: Client (map_client.txt)
+	Resource Packs: 
+	Current Language: English (US)
+	Profiler Position: N/A (disabled)
+	CPU: 12x AMD Ryzen 5 1600X Six-Core Processor 
+	OptiFine Version: OptiFine_1.8.9_HD_U_M5
+	OptiFine Build: ~~NULL~~
+	Render Distance Chunks: 8
+	Mipmaps: 4
+	Anisotropic Filtering: 1
+	Antialiasing: 0
+	Multitexture: false
+	Shaders: null
+	OpenGlVersion: 4.6.14761 Compatibility Profile Context 21.10.2 30.0.13025.5005
+	OpenGlRenderer: Radeon RX 570 Series
+	OpenGlVendor: ATI Technologies Inc.
+	CpuCount: 12

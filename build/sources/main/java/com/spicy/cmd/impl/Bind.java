@@ -14,7 +14,7 @@ public class Bind implements CommandExecutor {
     @Override
     public void execute(List<String> args) {
         if(args.size() < 1) {
-            PrintUtils.warning(new ChatComponentText(".bind <mod> <key>"));
+            PrintUtils.error(new ChatComponentText(".bind <mod> <key>"));
             return;
         }
 
@@ -25,7 +25,7 @@ public class Bind implements CommandExecutor {
           for(Mod mod : Spicy.getINSTANCE().modManager.getMods()) {
               if(args.get(0).equalsIgnoreCase(mod.getAlias())) {
                   mod.setKey(Keyboard.getKeyIndex(Keyboard.getKeyName(key)));
-                  PrintUtils.warning(new ChatComponentText(args.get(0) + " has bound to " + key));
+                  PrintUtils.info(new ChatComponentText(args.get(0) + " has bound to " + key));
                   if (args.get(1).equalsIgnoreCase("reset"))
                       mod.setKey(0);
               }

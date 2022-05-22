@@ -5,6 +5,8 @@ import com.spicy.events.Render3DEvent;
 import com.spicy.events.UpdateEvent;
 import com.spicy.mod.Category;
 import com.spicy.mod.Mod;
+import com.spicy.setting.$;
+import com.spicy.setting.interfaces.Setting;
 import com.spicy.utils.RotationUtils;
 import com.spicy.utils.Timer;
 import com.spicy.utils.Util;
@@ -42,6 +44,9 @@ public class KillAura extends Mod {
     private float lastHealth;
     private EntityLivingBase lastTarget = null;
 
+    @Setting(label = "Range")
+    public $<Double> range = new $<>(4.1, 2.0, 7.0);
+
     public KillAura() {
         super("KillAura", "Auto attacking targets", 0, Category.COMBAT);
         this.targets = new ArrayList<EntityLivingBase>();
@@ -51,7 +56,7 @@ public class KillAura extends Mod {
     public Listener<UpdateEvent> updateListener = new Listener<UpdateEvent>(event -> {
         switch (event.getTime()) {
             case BEFORE: {
-                setSuffix("Switch");
+                setSuffix("Switch " + range.val());
                 NoSlowdown noSlowdownModule = (NoSlowdown) Spicy.getINSTANCE().modManager.getMod(NoSlowdown.class);
                 this.targets = this.getTargets();
                 if (this.index >= this.targets.size()) {
@@ -176,7 +181,7 @@ public class KillAura extends Mod {
     public boolean isEntityValid(final Entity entity) {
         if (entity instanceof EntityLivingBase) {
             final EntityLivingBase entityLiving = (EntityLivingBase) entity;
-            if (!getMinecraft().thePlayer.isEntityAlive() || !entityLiving.isEntityAlive() || entityLiving.getDistanceToEntity(getMinecraft().thePlayer) > (getMinecraft().thePlayer.canEntityBeSeen(entityLiving) ? 4.7 : 3.0)) {
+            if (!getMinecraft().thePlayer.isEntityAlive() || !entityLiving.isEntityAlive() || entityLiving.getDistanceToEntity(getMinecraft().thePlayer) > (getMinecraft().thePlayer.canEntityBeSeen(entityLiving) ? range.val() : 3.0)) {
                 return false;
             }
             if (entityLiving.ticksExisted < 10.0) {
